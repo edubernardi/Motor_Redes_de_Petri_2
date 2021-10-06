@@ -34,4 +34,12 @@ public class Arco {
     public boolean ehReset(){
         return ehReset;
     }
+
+    public void setOrigem(Object origem) {
+        this.origem = origem;
+    }
+
+    public void setAlvo(Object alvo) {
+        this.alvo = alvo;
+    }
 }

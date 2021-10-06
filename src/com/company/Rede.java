@@ -4,10 +4,10 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Rede {
-    private ArrayList<Arco> arcos = new ArrayList<>();
-    private ArrayList<Transicao> transicoes = new ArrayList<>();
-    private ArrayList<Lugar> lugares = new ArrayList<>();
-    Teclado t = new Teclado();
+    protected ArrayList<Arco> arcos = new ArrayList<>();
+    protected ArrayList<Transicao> transicoes = new ArrayList<>();
+    protected ArrayList<Lugar> lugares = new ArrayList<>();
+    protected Teclado t = new Teclado();
 
     public Rede() {
 
@@ -118,16 +118,29 @@ public class Rede {
         System.out.println("Erro ao gerar conexao"  + " " + origemLabel + " " + destinoLabel);
     }
 
-    public void executarCiclos(int ciclos){
+    public void executarCiclos(){
         System.out.println("Estado inicial");
         mostraLugares();
-        for (int ciclo = 0; ciclo < ciclos; ciclo++){
+        boolean existemHabilitadas = true;
+        for (int ciclo = 0; existemHabilitadas; ciclo++){
             //scan de todas as transições
+            existemHabilitadas = true;
             ArrayList<Transicao> habilitadas = new ArrayList<>();
             for (Transicao t: transicoes){
-                if (t.habilitada()){
-                    habilitadas.add(t);
+                if (t.ehSubRede()){
+                    t.executarCiclosSubRede();
                 }
+                else {
+                    if (t.habilitada()){
+                        habilitadas.add(t);
+                    }
+                }
+            }
+            //verifica se existem transições para executar
+            if (habilitadas.isEmpty()){
+                existemHabilitadas = false;
+                System.out.println("\nFim da execução, não existem transições habilitadas");
+                break;
             }
             //identifica concorrencias
             for (Lugar l: lugares) {
@@ -168,5 +181,13 @@ public class Rede {
             i++;
         }
         System.out.println("\n");
+    }
+
+    public void transicaoParaSubRede(String label){
+        for (Transicao t: transicoes){
+            if (t.getLabel().equals(label)){
+                t.transformarEmSubRede();
+            }
+        }
     }
 }

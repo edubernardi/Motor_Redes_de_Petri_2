@@ -4,7 +4,6 @@ public class Main {
 
     public static void main(String[] args) {
         Rede r = new Rede();
-        //FALTA:Subredes, metodos remove, set e clear (simples)
 //        r.adicionarLugar("L1", 1);
 //        r.adicionarTransicao("T1");
 //        r.adicionaConexao("L1", "T1");
@@ -30,7 +29,9 @@ public class Main {
         r.adicionarConexao("L2","T2",5);
         r.adicionarConexao("T2","L3",1);
 
-        r.executarCiclos(3);
+        r.transicaoParaSubRede("T1");
+
+        r.executarCiclos();
 
     }
 }

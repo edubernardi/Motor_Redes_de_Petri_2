@@ -6,9 +6,12 @@ public class Transicao {
     private String label;
     private ArrayList<Arco> entradas = new ArrayList<Arco>();
     private ArrayList<Arco> saidas = new ArrayList<Arco>();
+    private boolean ehSubRede;
+    private Subrede subrede;
 
     public Transicao(String label) {
         this.label = label;
+        ehSubRede = false;
     }
 
     public void adicionaEntrada(Arco a){
@@ -68,4 +71,28 @@ public class Transicao {
             alvo.adicionarTokens(a.getPeso());
         }
     }
+
+    public boolean ehSubRede() {
+        return ehSubRede;
+    }
+
+    public void transformarEmSubRede(){
+        ehSubRede = true;
+        subrede = new Subrede(entradas, saidas, label);
+        subrede.adicionarTransicao("T1");
+        for (Arco a: entradas){
+            subrede.adicionarConexao(((Lugar) a.getOrigem()).getLabel(), "T1", a.getPeso());
+        }
+        for (Arco a: saidas){
+            subrede.adicionarConexao("T1", ((Lugar) a.getAlvo()).getLabel(), a.getPeso());
+        }
+
+    }
+
+    public void executarCiclosSubRede(){
+        if (subrede != null) {
+            subrede.executarCiclos();
+        }
+    }
 }
+
