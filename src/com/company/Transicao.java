@@ -23,8 +23,8 @@ public class Transicao {
         }
     }
 
-    public boolean existemHabilitadas(){
-        return subrede.existemHabilitadas();
+    public boolean existemHabilitadas(boolean resulucaoConcorrenciaAutomatica){
+        return subrede.existemHabilitadas(resulucaoConcorrenciaAutomatica);
     }
 
     public void adicionarSaida(Arco a){

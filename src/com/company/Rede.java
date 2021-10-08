@@ -136,8 +136,8 @@ public class Rede {
             ArrayList<Transicao> habilitadas = new ArrayList<>();
             for (Transicao t: transicoes){
                 if (t.ehSubRede()){
-                    if (t.existemHabilitadas()){
-                        t.executarCicloSubRede();
+                    if (t.existemHabilitadas(resulucaoConcorrenciaAutomatica)){
+                        habilitadas.add(t);
                     }
                 }
                 else {
@@ -157,7 +157,7 @@ public class Rede {
             mostraTransicoes(habilitadas);
             //identifica concorrencias
             for (Lugar l: lugares) {
-                if (l.getTokensInteressados() > l.getTokens()) {
+                if (l.getTokensInteressados() > l.getTokens() && l.getTokensInteressados() != 0) {
                     ArrayList<Transicao> transicoesInteressadas = l.getTransicoesInteressadas();
                     int escolha = -1;
                     if (resulucaoConcorrenciaAutomatica){
@@ -194,10 +194,7 @@ public class Rede {
             }
             //repetir enquanto possivel
             for (Transicao t: habilitadas){
-                if (t.ehSubRede()){
-                    t.executarCicloSubRede();
-                }
-                else {
+                if (!t.ehSubRede()){
                     if (t.habilitada()){
                         t.disparar();
                     }
@@ -220,11 +217,15 @@ public class Rede {
     public void mostraTransicoes(ArrayList<Transicao> habilitadas){
         int i = 0;
         for (Transicao t: transicoes){
-            if (habilitadas.contains(t)){
-                System.out.println("Transicao " + t.getLabel() + " habilitada");
-            }
-            else {
-                System.out.println("Transicao " + t.getLabel() + " nao habilitada");
+            if (t.ehSubRede()){
+                System.out.println("Transicao " + t.getLabel() + " eh Subrede");
+            } else {
+                if (habilitadas.contains(t)){
+                    System.out.println("Transicao " + t.getLabel() + " habilitada");
+                }
+                else {
+                    System.out.println("Transicao " + t.getLabel() + " nao habilitada");
+                }
             }
         }
     }

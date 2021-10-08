@@ -5,37 +5,37 @@ public class Main {
     public static void main(String[] args) {
         Rede r = new Rede();
         //TESTE 1 - Concorrencia
-        r.adicionarLugar("L1", 1);
-        r.adicionarTransicao("T1");
-        r.adicionarConexao("L1", "T1", 1);
-
-        r.adicionarLugar("L2");
-        r.adicionarConexao("T1", "L2");
-
-        r.adicionarTransicao("T2");
-        r.adicionarConexao("L1", "T2");
-
-        r.adicionarLugar("L3");
-        r.adicionarConexao("T2", "L3");
-        r.executarCiclos(true);
+//        r.adicionarLugar("L1", 1);
+//        r.adicionarTransicao("T1");
+//        r.adicionarConexao("L1", "T1", 1);
+//
+//        r.adicionarLugar("L2");
+//        r.adicionarConexao("T1", "L2");
+//
+//        r.adicionarTransicao("T2");
+//        r.adicionarConexao("L1", "T2");
+//
+//        r.adicionarLugar("L3");
+//        r.adicionarConexao("T2", "L3");
+//        r.executarCiclos(true);
 
         //Teste 2- Subredes
-//        r.adicionarLugar("L1", 5);
-//        r.adicionarLugar("L2");
-//        r.adicionarLugar("L3" );
-//
-//        r.adicionarTransicao("T1");
-//        r.adicionarTransicao("T2");
-//
-//        //r.adicionarConexao("L1","T1",2, false, false);
-//        r.adicionarConexao("T1","L2",3);
-//        r.adicionarConexao("L2","T2",5);
-//        r.adicionarConexao("T2","L3",1);
-//
-//        r.transicaoParaSubRede("T1");
-//        r.adicionarConexao("L1","T1",2, false, false);
-//        r.getTransicao("T1").getSubrede().adicionarConexao("L1", "T1", 2, false, false);
-//        r.executarCiclos();
+        r.adicionarLugar("L1", 5);
+        r.adicionarLugar("L2");
+        r.adicionarLugar("L3" );
+
+        r.adicionarTransicao("T1");
+        r.adicionarTransicao("T2");
+
+        r.adicionarConexao("L1","T1",2, false, false);
+        r.adicionarConexao("T1","L2",3);
+        r.adicionarConexao("L2","T2",5);
+        r.adicionarConexao("T2","L3",1);
+
+        r.transicaoParaSubRede("T1");
+        //r.adicionarConexao("L1","T1",2, false, false);
+        //r.getTransicao("T1").getSubrede().adicionarConexao("L1", "T1", 2, false, false);
+        r.executarCiclos(true);
 
         /*
         //Teste 3 - Do enunciado
@@ -71,8 +71,8 @@ public class Main {
         r.adicionarConexao("T4", "L5", 3);
         r.adicionarConexao("L5", "T2", 3);
 
-        r.executarCiclos();
-*/
+        r.executarCiclos(true);
+        */
 
 
 
