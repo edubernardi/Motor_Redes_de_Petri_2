@@ -14,12 +14,26 @@ public class Transicao {
         ehSubRede = false;
     }
 
-    public void adicionaEntrada(Arco a){
-        entradas.add(a);
+    public void adicionarEntrada(Arco a){
+        if (ehSubRede){
+            subrede.adicionarLugar((Lugar) a.getOrigem());
+        }
+        else {
+            entradas.add(a);
+        }
     }
 
-    public void adicionaSaida(Arco a){
-        saidas.add(a);
+    public boolean existemHabilitadas(){
+        return subrede.existemHabilitadas();
+    }
+
+    public void adicionarSaida(Arco a){
+        if (ehSubRede){
+            subrede.adicionarLugar((Lugar) a.getOrigem());
+        }
+        else {
+            saidas.add(a);
+        }
     }
 
     public String getLabel() {
@@ -27,6 +41,9 @@ public class Transicao {
     }
 
     public boolean habilitada(){
+        if (entradas.isEmpty() || saidas.isEmpty()){
+            return false;
+        }
         boolean habilitada = true;
         for (Arco e: entradas){
             Lugar origem = (Lugar) e.getOrigem();
@@ -89,10 +106,22 @@ public class Transicao {
 
     }
 
-    public void executarCiclosSubRede(){
+    public void executarCicloSubRede(){
         if (subrede != null) {
             subrede.executarCiclos();
         }
+    }
+
+    public void limpaConexoes(){
+        entradas.clear();
+        saidas.clear();
+    }
+
+    public Subrede getSubrede(){
+        if (ehSubRede){
+            return subrede;
+        }
+        return null;
     }
 }
 

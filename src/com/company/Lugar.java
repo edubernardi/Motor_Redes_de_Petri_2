@@ -60,10 +60,18 @@ public class Lugar {
     }
 
     public void adicionarTokens(int i){
-        this.tokens += i;
+        if ((tokens + i) > 0 ){
+            this.tokens += i;
+        }
     }
 
     public void clear(){
         this.tokens = 0;
+    }
+
+    public void setTokens(int tokens) {
+        if (tokens > 0){
+            this.tokens = tokens;
+        }
     }
 }
