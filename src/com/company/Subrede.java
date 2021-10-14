@@ -89,13 +89,17 @@ public class Subrede extends Rede {
             if (l.getTokensInteressados() > l.getTokens() && l.getTokensInteressados() != 0) {
                 ArrayList<Transicao> transicoesInteressadas = l.getTransicoesInteressadas();
                 int escolha = -1;
+                System.out.print("Concorrencia identificada entre as transições ");
+                for (Transicao t: transicoesInteressadas){
+                    System.out.print(t.getLabel() + " ");
+                }
                 if (resulucaoConcorrenciaAutomatica){
                     Random r = new Random();
                     escolha = r.nextInt(transicoesInteressadas.size());
-                    System.out.println("Concorrencia identificada, execução da transição " +
+                    System.out.println("\nExecução da transição " +
                             transicoesInteressadas.get(escolha).getLabel() + " escolhida de forma aleatória");
                 } else {
-                    System.out.println("Concorrencia identificada, escolha uma transição para ativar:");
+                    System.out.println("\nEscolha uma transição para ativar:");
                     while (escolha < 0 || escolha > transicoesInteressadas.size()) {
                         int i = 0;
                         for (Transicao t : transicoesInteressadas) {
@@ -114,11 +118,13 @@ public class Subrede extends Rede {
         //pede autorização do usuario para continuar
         t.leString("Aperte ENTER para continuar a simulação");
         //dispara as transições habilitadas
-        for(Transicao t: habilitadas){
-            if (t.ehSubRede()){
-                t.executarCicloSubRede();
+        for(int i = 0; i < habilitadas.size(); i++){
+            if (habilitadas.get(i).ehSubRede()){
+                habilitadas.get(i).executarCicloSubRede();
             } else {
-                t.disparar();
+                habilitadas.get(i).disparar();
+                habilitadas.remove(i);
+                i --;
             }
         }
         //repetir enquanto possivel

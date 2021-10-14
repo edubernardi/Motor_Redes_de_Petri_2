@@ -18,7 +18,7 @@ public class Main {
 
         r.adicionarLugar("L3");
         r.adicionarConexao("T2", "L3");
-        r.executarCiclos(true);
+        r.executarCiclos(false);
         */
 
         ///*
@@ -39,15 +39,15 @@ public class Main {
         r.getTransicao("T1").getSubrede().adicionarTransicao("T2");
 
         r.getTransicao("T1").getSubrede().adicionarConexao("L1","T1");
-        //r.getTransicao("T1").getSubrede().adicionarConexao("L1","T2");
+        r.getTransicao("T1").getSubrede().adicionarConexao("L1","T2");
 
         //teste extra
-        r.getTransicao("T1").getSubrede().adicionarLugar("L4");
-        r.getTransicao("T1").getSubrede().adicionarConexao("T1","L4");
-        r.getTransicao("T1").getSubrede().adicionarConexao("L4","T2");
-        r.getTransicao("T1").getSubrede().adicionarConexao("T2","L3");
-        //r.getTransicao("T1").getSubrede().adicionarConexao("T1","L2");
+        //r.getTransicao("T1").getSubrede().adicionarLugar("L4");
+        //r.getTransicao("T1").getSubrede().adicionarConexao("T1","L4");
+        //r.getTransicao("T1").getSubrede().adicionarConexao("L4","T2");
         //r.getTransicao("T1").getSubrede().adicionarConexao("T2","L3");
+        r.getTransicao("T1").getSubrede().adicionarConexao("T1","L2");
+        r.getTransicao("T1").getSubrede().adicionarConexao("T2","L3");
 
         r.executarCiclos(true);
         //*/

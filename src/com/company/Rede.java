@@ -168,14 +168,18 @@ public class Rede {
                     if (transicaoDentroDeSR){
                         continue;
                     }
+                    System.out.print("Concorrencia identificada entre as transições ");
+                    for (Transicao t: transicoesInteressadas){
+                        System.out.print(t.getLabel() + " ");
+                    }
                     int escolha = -1;
                     if (resulucaoConcorrenciaAutomatica){
                         Random r = new Random();
                         escolha = r.nextInt(transicoesInteressadas.size());
-                        System.out.println("Concorrencia identificada, execução da transição " +
+                        System.out.println("Execução da transição " +
                                 transicoesInteressadas.get(escolha).getLabel() + " escolhida de forma aleatória");
                     } else {
-                        System.out.println("Concorrencia identificada, escolha uma transição para ativar:");
+                        System.out.println("Escolha uma transição para ativar:");
                         while (escolha < 0 || escolha > transicoesInteressadas.size()) {
                             int i = 0;
                             for (Transicao t : transicoesInteressadas) {
