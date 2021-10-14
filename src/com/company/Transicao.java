@@ -8,6 +8,7 @@ public class Transicao {
     private ArrayList<Arco> saidas = new ArrayList<Arco>();
     private boolean ehSubRede;
     private Subrede subrede;
+    private boolean resulucaoConcorrenciaAutomatica = true;
 
     public Transicao(String label) {
         this.label = label;
@@ -24,6 +25,7 @@ public class Transicao {
     }
 
     public boolean existemHabilitadas(boolean resulucaoConcorrenciaAutomatica){
+        this.resulucaoConcorrenciaAutomatica = resulucaoConcorrenciaAutomatica;
         return subrede.existemHabilitadas(resulucaoConcorrenciaAutomatica);
     }
 
@@ -108,7 +110,9 @@ public class Transicao {
 
     public void executarCicloSubRede(){
         if (subrede != null) {
-            subrede.executarCiclos();
+            System.out.println("\nInício execução SubRede " + label);
+            subrede.executarCiclos(resulucaoConcorrenciaAutomatica);
+            System.out.println("Fim execução SubRede " + label + "\n");
         }
     }
 

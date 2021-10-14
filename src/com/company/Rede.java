@@ -127,8 +127,7 @@ public class Rede {
     }
 
     public void executarCiclos(boolean resulucaoConcorrenciaAutomatica){
-        System.out.println("\nEstado inicial");
-        mostraLugares();
+        System.out.println("\nCiclo 0 (Estado inicial)");
         boolean existemHabilitadas = true;
         for (int ciclo = 1; existemHabilitadas; ciclo++){
             //scan de todas as transições
@@ -149,12 +148,12 @@ public class Rede {
             //verifica se existem transições para executar
             if (habilitadas.isEmpty()){
                 existemHabilitadas = false;
-                mostraTransicoes(habilitadas);
+                mostraRede(habilitadas);
                 System.out.println("Fim da execução, não existem transições habilitadas");
                 break;
             }
-            //mostra transicoes
-            mostraTransicoes(habilitadas);
+            //mostra status rede
+            mostraRede(habilitadas);
             //identifica concorrencias
             for (Lugar l: lugares) {
                 if (l.getTokensInteressados() > l.getTokens() && l.getTokensInteressados() != 0) {
@@ -182,6 +181,10 @@ public class Rede {
                     }
                 }
             }
+            for (Lugar lugar: lugares){
+                lugar.resetTokensInteressados();
+                lugar.resetTransicoesInteressadas();
+            }
             //pede autorização do usuario para continuar
             t.leString("Aperte ENTER para continuar a simulação");
             //dispara as transições habilitadas
@@ -201,8 +204,12 @@ public class Rede {
                 }
             }
             //prints
-            System.out.println("\nApós ciclo " + ciclo);
-            mostraLugares();
+            System.out.println("Ciclo " + ciclo);
+            for (Lugar lugar: lugares){
+                lugar.resetTokensInteressados();
+                lugar.resetTransicoesInteressadas();
+            }
+            //mostraRede(habilitadas);
         }
     }
 
@@ -294,5 +301,32 @@ public class Rede {
             }
         }
         return null;
+    }
+
+    public void mostraRede(ArrayList<Transicao> habilitadas){
+        System.out.print("| ");
+        for (Lugar l: lugares){
+            System.out.print(l.getLabel() + " | ");
+        }
+        for (Transicao t: transicoes){
+            System.out.print(t.getLabel() + " | ");
+        }
+        System.out.print("\n| ");
+        for (Lugar l: lugares) {
+            System.out.print(l.getTokens() + "  | ");
+        }
+        for (Transicao t: transicoes){
+            if (t.ehSubRede()){
+                System.out.print("SR" + " | ");
+            } else {
+                if (habilitadas.contains(t)){
+                    System.out.print("SIM" + "| ");
+                }
+                else {
+                    System.out.print("NÃO" + "| ");
+                }
+            }
+        }
+        System.out.print("\n");
     }
 }
