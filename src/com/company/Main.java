@@ -28,27 +28,22 @@ public class Main {
         r.adicionarLugar("L3" );
 
         r.adicionarTransicao("T1");
-        r.adicionarTransicao("T2");
 
-        r.adicionarConexao("L1","T1",2, false, false);
-        r.adicionarConexao("T1","L2",3);
-        r.adicionarConexao("L2","T2",5);
-        r.adicionarConexao("T2","L3",1);
         r.adicionarConexao("L1", "T1");
         r.adicionarConexao("T1", "L2");
         r.adicionarConexao("T1", "L3");
+
         r.transicaoParaSubRede("T1");
 
+        r.getTransicao("T1").getSubrede().limpaConexoes("T1");
         r.getTransicao("T1").getSubrede().adicionarTransicao("T2");
-        r.getTransicao("T1").getSubrede().adicionarTransicao("T3");
 
+        r.getTransicao("T1").getSubrede().adicionarConexao("L1","T1");
         r.getTransicao("T1").getSubrede().adicionarConexao("L1","T2");
-        r.getTransicao("T1").getSubrede().adicionarConexao("L1","T3");
 
-        r.getTransicao("T1").getSubrede().adicionarConexao("T2","L2");
+        r.getTransicao("T1").getSubrede().adicionarConexao("T1","L2");
         r.getTransicao("T1").getSubrede().adicionarConexao("T2","L3");
-        //r.adicionarConexao("L1","T1",2, false, false);
-        //r.getTransicao("T1").getSubrede().adicionarConexao("L1", "T1", 2, false, false);
+
         r.executarCiclos(true);
         */
 

@@ -158,6 +158,16 @@ public class Rede {
             for (Lugar l: lugares) {
                 if (l.getTokensInteressados() > l.getTokens() && l.getTokensInteressados() != 0) {
                     ArrayList<Transicao> transicoesInteressadas = l.getTransicoesInteressadas();
+                    boolean transicaoDentroDeSR = false;
+                    for (Transicao t: transicoesInteressadas){
+                        if (!transicoes.contains(t)) {
+                            transicaoDentroDeSR = true;
+                            break;
+                        }
+                    }
+                    if (transicaoDentroDeSR){
+                        break;
+                    }
                     int escolha = -1;
                     if (resulucaoConcorrenciaAutomatica){
                         Random r = new Random();
