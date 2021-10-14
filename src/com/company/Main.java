@@ -83,9 +83,6 @@ public class Main {
 
         r.executarCiclos(true);
         //*/
-
-
-
     }
 }
 

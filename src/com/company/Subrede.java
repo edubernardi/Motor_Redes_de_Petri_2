@@ -51,34 +51,6 @@ public class Subrede extends Rede {
             }
             return false;
         }
-
-        for (Lugar l: lugares) {
-            if (l.getTokensInteressados() > l.getTokens()) {
-                ArrayList<Transicao> transicoesInteressadas = l.getTransicoesInteressadas();
-                int escolha = -1;
-                if (resulucaoConcorrenciaAutomatica){
-                    Random r = new Random();
-                    escolha = r.nextInt(transicoesInteressadas.size());
-                    System.out.println("Concorrencia identificada, execução da transição " +
-                            transicoesInteressadas.get(escolha).getLabel() + " escolhida de forma aleatória");
-                } else {
-                    System.out.println("Concorrencia identificada, escolha uma transição para ativar:");
-                    while (escolha < 0 || escolha > transicoesInteressadas.size()) {
-                        int i = 0;
-                        for (Transicao t : transicoesInteressadas) {
-                            System.out.println(i + " - " + t.getLabel());
-                            i += 1;
-                        }
-                        escolha = t.leInt("Escolha (int): ");
-                    }
-                }
-                transicoesInteressadas.remove(escolha);
-                for (Transicao t : transicoesInteressadas) {
-                    habilitadas.remove(t);
-                }
-            }
-        }
-
         return true;
     }
 

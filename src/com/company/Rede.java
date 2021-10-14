@@ -166,7 +166,7 @@ public class Rede {
                         }
                     }
                     if (transicaoDentroDeSR){
-                        break;
+                        continue;
                     }
                     int escolha = -1;
                     if (resulucaoConcorrenciaAutomatica){
