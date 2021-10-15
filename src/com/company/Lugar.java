@@ -28,19 +28,19 @@ public class Lugar {
         return tokens;
     }
 
-    public void addTokensInteressados(int i){
+    public void addTokensInteressados(int i) {
         tokensInteressados += i;
     }
 
-    public void resetTokensInteressados(){
+    public void resetTokensInteressados() {
         tokensInteressados = 0;
     }
 
-    public void addTransicaoInteressada(Transicao t){
+    public void addTransicaoInteressada(Transicao t) {
         transicoesInteressadas.add(t);
     }
 
-    public void resetTransicoesInteressadas(){
+    public void resetTransicoesInteressadas() {
         transicoesInteressadas.clear();
     }
 
@@ -52,25 +52,25 @@ public class Lugar {
         return transicoesInteressadas;
     }
 
-    public void reduzirTokens(int i){
+    public void reduzirTokens(int i) {
         this.tokens -= i;
-        if (tokens < 0){
+        if (tokens < 0) {
             System.out.println("Erro, tokens negativos em " + label);
         }
     }
 
-    public void adicionarTokens(int i){
-        if ((tokens + i) > 0 ){
+    public void adicionarTokens(int i) {
+        if ((tokens + i) > 0) {
             this.tokens += i;
         }
     }
 
-    public void clear(){
+    public void clear() {
         this.tokens = 0;
     }
 
     public void setTokens(int tokens) {
-        if (tokens > 0){
+        if (tokens > 0) {
             this.tokens = tokens;
         }
     }

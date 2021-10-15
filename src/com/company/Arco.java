@@ -27,11 +27,11 @@ public class Arco {
         return alvo;
     }
 
-    public boolean ehInibidor(){
+    public boolean ehInibidor() {
         return ehInibidor;
     }
 
-    public boolean ehReset(){
+    public boolean ehReset() {
         return ehReset;
     }
 

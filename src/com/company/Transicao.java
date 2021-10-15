@@ -15,25 +15,23 @@ public class Transicao {
         ehSubRede = false;
     }
 
-    public void adicionarEntrada(Arco a){
-        if (ehSubRede){
+    public void adicionarEntrada(Arco a) {
+        if (ehSubRede) {
             subrede.adicionarLugar((Lugar) a.getOrigem());
-        }
-        else {
+        } else {
             entradas.add(a);
         }
     }
 
-    public boolean existemHabilitadas(boolean resulucaoConcorrenciaAutomatica){
+    public boolean existemHabilitadas(boolean resulucaoConcorrenciaAutomatica) {
         this.resulucaoConcorrenciaAutomatica = resulucaoConcorrenciaAutomatica;
         return subrede.existemHabilitadas(resulucaoConcorrenciaAutomatica);
     }
 
-    public void adicionarSaida(Arco a){
-        if (ehSubRede){
+    public void adicionarSaida(Arco a) {
+        if (ehSubRede) {
             subrede.adicionarLugar((Lugar) a.getOrigem());
-        }
-        else {
+        } else {
             saidas.add(a);
         }
     }
@@ -42,30 +40,29 @@ public class Transicao {
         return label;
     }
 
-    public boolean habilitada(){
-        if (entradas.isEmpty() || saidas.isEmpty()){
+    public boolean habilitada() {
+        if (entradas.isEmpty() || saidas.isEmpty()) {
             return false;
         }
         boolean habilitada = true;
-        for (Arco e: entradas){
+        for (Arco e : entradas) {
             Lugar origem = (Lugar) e.getOrigem();
-            if (!e.ehInibidor()){
-                if (origem.getTokens() < e.getPeso()){
+            if (!e.ehInibidor()) {
+                if (origem.getTokens() < e.getPeso()) {
                     habilitada = false;
                     break;
                 }
-            }
-            else {
-                if (origem.getTokens() >= e.getPeso()){
+            } else {
+                if (origem.getTokens() >= e.getPeso()) {
                     habilitada = false;
                     break;
                 }
             }
         }
-        if (habilitada){
-            for (Arco e: entradas){
-                if (!e.ehInibidor()){
-                    Lugar origem = (Lugar)  e.getOrigem();
+        if (habilitada) {
+            for (Arco e : entradas) {
+                if (!e.ehInibidor()) {
+                    Lugar origem = (Lugar) e.getOrigem();
                     origem.addTokensInteressados(e.getPeso());
                     origem.addTransicaoInteressada(this);
                 }
@@ -74,18 +71,18 @@ public class Transicao {
         return habilitada;
     }
 
-    public void disparar(){
-        for (Arco a: entradas){
-            if (!a.ehInibidor()){
+    public void disparar() {
+        for (Arco a : entradas) {
+            if (!a.ehInibidor()) {
                 Lugar origem = (Lugar) a.getOrigem();
-                if (a.ehReset()){
+                if (a.ehReset()) {
                     origem.clear();
                 } else {
                     origem.reduzirTokens(a.getPeso());
                 }
             }
         }
-        for (Arco a: saidas){
+        for (Arco a : saidas) {
             Lugar alvo = (Lugar) a.getAlvo();
             alvo.adicionarTokens(a.getPeso());
         }
@@ -95,20 +92,20 @@ public class Transicao {
         return ehSubRede;
     }
 
-    public void transformarEmSubRede(){
+    public void transformarEmSubRede() {
         ehSubRede = true;
         subrede = new Subrede(entradas, saidas, label);
         subrede.adicionarTransicao("T1");
-        for (Arco a: entradas){
+        for (Arco a : entradas) {
             subrede.adicionarConexao(((Lugar) a.getOrigem()).getLabel(), "T1", a.getPeso());
         }
-        for (Arco a: saidas){
+        for (Arco a : saidas) {
             subrede.adicionarConexao("T1", ((Lugar) a.getAlvo()).getLabel(), a.getPeso());
         }
 
     }
 
-    public void executarCicloSubRede(){
+    public void executarCicloSubRede() {
         if (subrede != null) {
             System.out.println("\nInício execução SubRede " + label);
             subrede.executarCiclos(resulucaoConcorrenciaAutomatica);
@@ -116,13 +113,13 @@ public class Transicao {
         }
     }
 
-    public void limpaConexoes(){
+    public void limpaConexoes() {
         entradas.clear();
         saidas.clear();
     }
 
-    public Subrede getSubrede(){
-        if (ehSubRede){
+    public Subrede getSubrede() {
+        if (ehSubRede) {
             return subrede;
         }
         return null;

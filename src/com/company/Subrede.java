@@ -13,39 +13,38 @@ public class Subrede extends Rede {
         this.entradas = entradas;
         this.saidas = saidas;
         this.label = label;
-        for (Arco a: entradas){
+        for (Arco a : entradas) {
             lugares.add((Lugar) a.getOrigem());
         }
-        for (Arco a: saidas){
+        for (Arco a : saidas) {
             lugares.add((Lugar) a.getAlvo());
         }
     }
 
-    public boolean existemHabilitadas(boolean resulucaoConcorrenciaAutomatica){
+    public boolean existemHabilitadas(boolean resulucaoConcorrenciaAutomatica) {
         boolean existemHabilitadas = true;
 
-        for (Lugar l: lugares){
+        for (Lugar l : lugares) {
             l.resetTokensInteressados();
             l.resetTransicoesInteressadas();
         }
 
         habilitadas.clear();
         //scan de todas as transições
-        for (Transicao t: transicoes){
-            if (t.ehSubRede()){
-                if (t.existemHabilitadas(resulucaoConcorrenciaAutomatica)){
+        for (Transicao t : transicoes) {
+            if (t.ehSubRede()) {
+                if (t.existemHabilitadas(resulucaoConcorrenciaAutomatica)) {
                     habilitadas.add(t);
                 }
-            }
-            else {
-                if (t.habilitada()){
+            } else {
+                if (t.habilitada()) {
                     habilitadas.add(t);
                 }
             }
         }
         //verifica se existem transições para executar
-        if (habilitadas.isEmpty()){
-            for (Lugar l: lugares){
+        if (habilitadas.isEmpty()) {
+            for (Lugar l : lugares) {
                 l.resetTokensInteressados();
                 l.resetTransicoesInteressadas();
             }
@@ -54,29 +53,28 @@ public class Subrede extends Rede {
         return true;
     }
 
-    public void executarCiclos(boolean resulucaoConcorrenciaAutomatica){
+    public void executarCiclos(boolean resulucaoConcorrenciaAutomatica) {
         boolean existemHabilitadas = true;
-        for (Lugar lugar: lugares){
+        for (Lugar lugar : lugares) {
             lugar.resetTokensInteressados();
             lugar.resetTransicoesInteressadas();
         }
         //scan de todas as transições
         existemHabilitadas = true;
         ArrayList<Transicao> habilitadas = new ArrayList<>();
-        for (Transicao t: transicoes){
-            if (t.ehSubRede()){
-                if (t.existemHabilitadas(resulucaoConcorrenciaAutomatica)){
+        for (Transicao t : transicoes) {
+            if (t.ehSubRede()) {
+                if (t.existemHabilitadas(resulucaoConcorrenciaAutomatica)) {
                     habilitadas.add(t);
                 }
-            }
-            else {
-                if (t.habilitada()){
+            } else {
+                if (t.habilitada()) {
                     habilitadas.add(t);
                 }
             }
         }
         //verifica se existem transições para executar
-        if (habilitadas.isEmpty()){
+        if (habilitadas.isEmpty()) {
             existemHabilitadas = false;
             mostraRede(habilitadas);
             System.out.println("Fim da execução, não existem transições habilitadas");
@@ -85,15 +83,15 @@ public class Subrede extends Rede {
         //mostra status rede
         mostraRede(habilitadas);
         //identifica concorrencias
-        for (Lugar l: lugares) {
+        for (Lugar l : lugares) {
             if (l.getTokensInteressados() > l.getTokens() && l.getTokensInteressados() != 0) {
                 ArrayList<Transicao> transicoesInteressadas = l.getTransicoesInteressadas();
                 int escolha = -1;
                 System.out.print("Concorrencia identificada entre as transições ");
-                for (Transicao t: transicoesInteressadas){
+                for (Transicao t : transicoesInteressadas) {
                     System.out.print(t.getLabel() + " ");
                 }
-                if (resulucaoConcorrenciaAutomatica){
+                if (resulucaoConcorrenciaAutomatica) {
                     Random r = new Random();
                     escolha = r.nextInt(transicoesInteressadas.size());
                     System.out.println("\nExecução da transição " +
@@ -118,25 +116,25 @@ public class Subrede extends Rede {
         //pede autorização do usuario para continuar
         t.leString("Aperte ENTER para continuar a simulação");
         //dispara as transições habilitadas
-        for(int i = 0; i < habilitadas.size(); i++){
-            if (habilitadas.get(i).ehSubRede()){
+        for (int i = 0; i < habilitadas.size(); i++) {
+            if (habilitadas.get(i).ehSubRede()) {
                 habilitadas.get(i).executarCicloSubRede();
             } else {
                 habilitadas.get(i).disparar();
                 habilitadas.remove(i);
-                i --;
+                i--;
             }
         }
         //repetir enquanto possivel
-        for (Transicao t: habilitadas){
-            if (!t.ehSubRede()){
-                if (t.habilitada()){
+        for (Transicao t : habilitadas) {
+            if (!t.ehSubRede()) {
+                if (t.habilitada()) {
                     t.disparar();
                 }
             }
         }
         //prints
-        for (Lugar lugar: lugares){
+        for (Lugar lugar : lugares) {
             lugar.resetTokensInteressados();
             lugar.resetTransicoesInteressadas();
         }
