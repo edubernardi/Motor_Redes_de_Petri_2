@@ -4,7 +4,6 @@ import java.util.Random;
 
 public class Client extends Entity {
     private int size;
-    private int id;
 
     public Client(int id) {
         super(id);

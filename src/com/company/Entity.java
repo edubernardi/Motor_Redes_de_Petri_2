@@ -1,14 +1,18 @@
 package com.company;
 
 public class Entity {
-    private String name;
-    private int id;
-    private double creationTime;
-    private int priority;
-    private Rede redePetri;
+    protected String name;
+    protected int id;
+    protected double creationTime;
+    protected int priority;
+    protected Rede redePetri;
 
     public Entity(int id) {
         this.id = id;
+    }
+
+    public Entity(Rede redePetri){
+        this.redePetri = redePetri;
     }
 
     public Entity(String name) {

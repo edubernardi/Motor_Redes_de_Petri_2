@@ -27,6 +27,13 @@ public class grupoEntidades {
         this.lista = new ArrayList<Entity>();
     }
 
+    public grupoEntidades() {
+        this.mode = "FIFO"; //modo padrao
+        this.size = 0;
+        this.maxSize = 2147483647;
+        this.lista = new ArrayList<Entity>();
+    }
+
     public void insert(Entity e){
         if (lista.size() < maxSize){
             lista.add(e);

@@ -3,7 +3,7 @@ package com.company;
 public class Main {
 
     public static void main(String[] args) {
-        Rede r = new Rede();
+        //Rede r = new Rede();
         //TESTE 1 - Concorrencia
         /*
         r.adicionarLugar("L1", 1);
@@ -146,7 +146,47 @@ public class Main {
         */
 
         Scheduler s = new Scheduler();
-        //System.out.println(s.exponencial(1));
+
+        Rede redeGarcons = new Rede();
+
+        redeGarcons.adicionarLugar("Garcons disponiveis");
+        redeGarcons.adicionarLugar("Higienizando mesa");
+        redeGarcons.adicionarLugar("Atendendo caixa");
+        redeGarcons.adicionarLugar("Transportando refeicao");
+        redeGarcons.adicionarLugar("Refeicoes aguardando transporte");
+        redeGarcons.adicionarLugar("Caixa precisa ir ao banheiro");
+
+        redeGarcons.adicionarTransicao("Higienizar mesa");
+        redeGarcons.adicionarTransicao("Fim higienizacao");
+        redeGarcons.adicionarTransicao("Transportar refeicao");
+        redeGarcons.adicionarTransicao("Fim transporte");
+        redeGarcons.adicionarTransicao("Substituir caixa");
+        redeGarcons.adicionarTransicao("Caixa voltou");
+
+        redeGarcons.adicionarConexao("Garcons disponiveis", "Higienizar mesa");
+        redeGarcons.adicionarConexao("Garcons disponiveis", "Transportar refeicao");
+        redeGarcons.adicionarConexao("Garcons disponiveis", "Substituir caixa");
+
+        redeGarcons.adicionarConexao("Caixa precisa ir ao banheiro", "Substituir caixa");
+        redeGarcons.adicionarConexao("Refeicoes aguardando transporte", "Transportar refeicao");
+
+        redeGarcons.adicionarConexao("Higienizar mesa", "Higienizando mesa");
+        redeGarcons.adicionarConexao("Higienizando mesa", "Fim higienizacao");
+        redeGarcons.adicionarConexao("Fim higienizacao", "Garcons disponiveis");
+
+        redeGarcons.adicionarConexao("Transportar refeicao", "Transportando refeicao");
+        redeGarcons.adicionarConexao("Transportando refeicao", "Fim transporte");
+        redeGarcons.adicionarConexao("Fim transporte", "Garcons disponiveis");
+
+        redeGarcons.adicionarConexao("Substituir caixa", "Atendendo caixa");
+        redeGarcons.adicionarConexao("Atendendo caixa", "Caixa voltou");
+        redeGarcons.adicionarConexao("Caixa voltou", "Garcons disponiveis");
+
+        redeGarcons.setTokens("Garcons disponiveis", 2);
+
+        Garcon garcon = new Garcon(redeGarcons);
+        s.addEntity(garcon);
+
         grupoEntidades filaChegada1 = new grupoEntidades("Fila de Chegada");
         grupoEntidades filaChegada2 = new grupoEntidades("Fila de Chegada");
         Chegada chegada = new Chegada(s.normal(8,3), 180, filaChegada1, filaChegada2);
@@ -169,8 +209,6 @@ public class Main {
         s.addGroup(filaMesas4Lugares);
 
         s.executar();
-        System.out.println(filaChegada1.getSize());
-
     }
 }
 
