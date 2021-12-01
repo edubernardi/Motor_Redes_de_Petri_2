@@ -147,19 +147,30 @@ public class Main {
 
         Scheduler s = new Scheduler();
         //System.out.println(s.exponencial(1));
-        grupoEntidades filaChegada1 = new FilaChegada("Fila de Chegada");
-        grupoEntidades filaChegada2 = new FilaChegada("Fila de Chegada");
-        Chegada chegada = new Chegada(1, 180, filaChegada1, filaChegada2);
+        grupoEntidades filaChegada1 = new grupoEntidades("Fila de Chegada");
+        grupoEntidades filaChegada2 = new grupoEntidades("Fila de Chegada");
+        Chegada chegada = new Chegada(s.normal(8,3), 180, filaChegada1, filaChegada2);
         s.adicionarEvent(chegada);
 
         grupoEntidades balcao = new grupoEntidades("Balcao", 6);
-        grupoEntidades mesas2Lugares = new grupoEntidades("Mesas de 2 lugares", 4);
-        grupoEntidades mesas4Lugares = new grupoEntidades("Mesas de 4 lugares", 6);
+        grupoEntidades mesas2Lugares = new grupoEntidades("Mesas2L", 4);
+        grupoEntidades mesas4Lugares = new grupoEntidades("Mesas4L", 6);
 
+        s.addGroup(balcao);
+        s.addGroup(mesas2Lugares);
+        s.addGroup(mesas4Lugares);
 
+        grupoEntidades filaBalcao = new grupoEntidades("Fila Balcao");
+        grupoEntidades filaMesas2Lugares = new grupoEntidades("Fila Mesas de 2 Lugares");
+        grupoEntidades filaMesas4Lugares = new grupoEntidades("Fila Mesas de 4 Lugares");
+
+        s.addGroup(filaBalcao);
+        s.addGroup(filaMesas2Lugares);
+        s.addGroup(filaMesas4Lugares);
 
         s.executar();
         System.out.println(filaChegada1.getSize());
+
     }
 }
 

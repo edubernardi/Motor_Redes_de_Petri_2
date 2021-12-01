@@ -104,6 +104,23 @@ public class grupoEntidades {
         return lista.size();
     }
 
+    public Entity getEntity(String name){
+        for (Entity e: lista){
+            if (e.getName().equals(name)){
+                return e;
+            }
+        }
+        return null;
+    }
+
+    public boolean isFull(){
+        return size >= maxSize;
+    }
+
+    public ArrayList<Entity> getLista() {
+        return lista;
+    }
+
     // coleta de estatisticas
     //public double tamanhoMedio(){
 

@@ -23,14 +23,14 @@ public class Chegada extends Evento {
 
         if (fila1.getSize() > fila2.getSize()){
             fila2.insert(newClient);
-            System.out.println("Chegou novo grupo " + newClient.getId() + " de " + newClient.getSize() + " clientes em " + time +
-                    " e foi para a Fila 2");
+            System.out.println(time + ": Chegou novo grupo " + newClient.getId() + " de " + newClient.getSize() +
+                    " clientes e foi para a Fila 2");
             IniciarPedido pedido = new IniciarPedido(tec + s.normal(8,3), fila2);
             s.adicionarEvent(pedido);
         } else {
             fila1.insert(newClient);
-            System.out.println("Chegou novo grupo " + newClient.getId() + " de " + newClient.getSize() + " clientes em " + time +
-                    " e foi para a Fila 1");
+            System.out.println(time + ": Chegou novo grupo " + newClient.getId() + " de " + newClient.getSize() +
+                    " clientes e foi para a Fila 1");
             IniciarPedido pedido = new IniciarPedido(tec + s.normal(8,3), fila1);
             s.adicionarEvent(pedido);
         }

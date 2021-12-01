@@ -10,6 +10,7 @@ public class Scheduler {
     private double tempo;
     private FEL filaEventos = new FEL();
     private LCG gerador = new LCG(17);
+    private ArrayList<grupoEntidades> grupos = new ArrayList<grupoEntidades>();
     private int id = 0;
 
     public Scheduler() {
@@ -67,6 +68,20 @@ public class Scheduler {
         return id;
     }
 
+    public void addGroup(grupoEntidades group){
+        grupos.add(group);
+    }
 
+    public grupoEntidades getEntityGroup(int i){
+        return grupos.get(i);
+    }
+
+    public FEL getFilaEventos() {
+        return filaEventos;
+    }
+
+    public ArrayList<grupoEntidades> getGrupos() {
+        return grupos;
+    }
 }
 
