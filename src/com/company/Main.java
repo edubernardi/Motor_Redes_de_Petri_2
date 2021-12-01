@@ -92,7 +92,7 @@ public class Main {
         r.adicionarConexao("L5", "T2", 3);
 
         r.executarCiclos(true);
-        */
+
 
         r.adicionarLugar("L1");
         r.adicionarLugar("L2", 2);
@@ -143,6 +143,23 @@ public class Main {
         r.adicionarConexao("L9", "Tg");
 
         r.executarCiclos(true);
+        */
+
+        Scheduler s = new Scheduler();
+        //System.out.println(s.exponencial(1));
+        grupoEntidades filaChegada1 = new FilaChegada("Fila de Chegada");
+        grupoEntidades filaChegada2 = new FilaChegada("Fila de Chegada");
+        Chegada chegada = new Chegada(1, 180, filaChegada1, filaChegada2);
+        s.adicionarEvent(chegada);
+
+        grupoEntidades balcao = new grupoEntidades("Balcao", 6);
+        grupoEntidades mesas2Lugares = new grupoEntidades("Mesas de 2 lugares", 4);
+        grupoEntidades mesas4Lugares = new grupoEntidades("Mesas de 4 lugares", 6);
+
+
+
+        s.executar();
+        System.out.println(filaChegada1.getSize());
     }
 }
 
