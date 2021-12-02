@@ -11,7 +11,7 @@ public class Scheduler {
     private FEL filaEventos = new FEL();
     private LCG gerador = new LCG(17);
     private ArrayList<grupoEntidades> grupos = new ArrayList<grupoEntidades>();
-    private grupoEntidades entidades = new grupoEntidades();
+    private ArrayList<Entity> entidades = new ArrayList<Entity>();
     private int id = 0;
 
     public Scheduler() {
@@ -24,14 +24,12 @@ public class Scheduler {
 
     public void criarEvento(String nome){
         Evento novoEvento = new Evento(nome);
-        novoEvento.setIdEvento(id);
-        id++;
+        //novoEvento.setIdEvento(id);
+        //id++;
         filaEventos.addEvent(novoEvento);
     }
 
     public void adicionarEvent(Evento e){
-        e.setIdEvento(id);
-        id++;
         filaEventos.addEvent(e);
     }
 
@@ -56,7 +54,7 @@ public class Scheduler {
     }
 
     public void executar(int tempoMaximo){
-        while (tempo < tempoMaximo){
+        while (tempo < tempoMaximo && !filaEventos.isEmpty()){
             Evento eventoAtual = filaEventos.getNext();
             eventoAtual.execute(tempo, this);
             tempo = eventoAtual.getTec();
@@ -86,7 +84,15 @@ public class Scheduler {
     }
 
     public void addEntity(Entity e){
-        entidades.insert(e);
+        entidades.add(e);
+    }
+
+    public ArrayList<Entity> getEntidades(){
+        return entidades;
+    }
+
+    public double random(){
+        return gerador.gerarProximo();
     }
 }
 

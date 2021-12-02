@@ -127,7 +127,7 @@ public class Rede {
     }
 
     public void executarCiclos(boolean resulucaoConcorrenciaAutomatica) {
-        System.out.println("\nCiclo 0 (Estado inicial)");
+        //System.out.println("\nCiclo 0 (Estado inicial)");
         boolean existemHabilitadas = true;
         for (int ciclo = 1; existemHabilitadas; ciclo++) {
             //scan de todas as transições
@@ -147,12 +147,12 @@ public class Rede {
             //verifica se existem transições para executar
             if (habilitadas.isEmpty()) {
                 existemHabilitadas = false;
-                mostraRede(habilitadas);
-                System.out.println("Fim da execução, não existem transições habilitadas");
+                //mostraRede(habilitadas);
+                //System.out.println("Fim da execução, não existem transições habilitadas");
                 break;
             }
             //mostra status rede
-            mostraRede(habilitadas);
+            //mostraRede(habilitadas);
             //identifica concorrencias
             for (Lugar l : lugares) {
                 if (l.getTokensInteressados() > l.getTokens() && l.getTokensInteressados() != 0) {
@@ -167,18 +167,18 @@ public class Rede {
                     if (transicaoDentroDeSR) {
                         continue;
                     }
-                    System.out.print("Concorrencia identificada entre as transições ");
+                    //System.out.print("Concorrencia identificada entre as transições ");
                     for (Transicao t : transicoesInteressadas) {
-                        System.out.print(t.getLabel() + " ");
+                        //System.out.print(t.getLabel() + " ");
                     }
                     int escolha = -1;
                     if (resulucaoConcorrenciaAutomatica) {
                         Random r = new Random();
                         escolha = r.nextInt(transicoesInteressadas.size());
-                        System.out.println("Execução da transição " +
-                                transicoesInteressadas.get(escolha).getLabel() + " escolhida de forma aleatória");
+                        //System.out.println("Execução da transição " +
+                                //transicoesInteressadas.get(escolha).getLabel() + " escolhida de forma aleatória");
                     } else {
-                        System.out.println("Escolha uma transição para ativar:");
+                        //System.out.println("Escolha uma transição para ativar:");
                         while (escolha < 0 || escolha > transicoesInteressadas.size()) {
                             int i = 0;
                             for (Transicao t : transicoesInteressadas) {
@@ -198,8 +198,6 @@ public class Rede {
                 lugar.resetTokensInteressados();
                 lugar.resetTransicoesInteressadas();
             }
-            //pede autorização do usuario para continuar
-            t.leString("Aperte ENTER para continuar a simulação");
             //dispara as transições habilitadas
             for (Transicao t : habilitadas) {
                 if (t.ehSubRede()) {
@@ -217,7 +215,105 @@ public class Rede {
                 }
             }
             //prints
-            System.out.println("Ciclo " + ciclo);
+            //System.out.println("Ciclo " + ciclo);
+            for (Lugar lugar : lugares) {
+                lugar.resetTokensInteressados();
+                lugar.resetTransicoesInteressadas();
+            }
+            //mostraRede(habilitadas);
+        }
+    }
+
+    public void executarCiclos(boolean resulucaoConcorrenciaAutomatica, int ciclos) {
+        //System.out.println("\nCiclo 0 (Estado inicial)");
+        boolean existemHabilitadas = true;
+        for (int ciclo = 1; ciclo < ciclos; ciclo++) {
+            //scan de todas as transições
+            existemHabilitadas = true;
+            ArrayList<Transicao> habilitadas = new ArrayList<>();
+            for (Transicao t : transicoes) {
+                if (t.ehSubRede()) {
+                    if (t.existemHabilitadas(resulucaoConcorrenciaAutomatica)) {
+                        habilitadas.add(t);
+                    }
+                } else {
+                    if (t.habilitada()) {
+                        habilitadas.add(t);
+                    }
+                }
+            }
+            //verifica se existem transições para executar
+            if (habilitadas.isEmpty()) {
+                existemHabilitadas = false;
+                //mostraRede(habilitadas);
+                //System.out.println("Fim da execução, não existem transições habilitadas");
+                break;
+            }
+            //mostra status rede
+            //mostraRede(habilitadas);
+            //identifica concorrencias
+            for (Lugar l : lugares) {
+                if (l.getTokensInteressados() > l.getTokens() && l.getTokensInteressados() != 0) {
+                    ArrayList<Transicao> transicoesInteressadas = l.getTransicoesInteressadas();
+                    boolean transicaoDentroDeSR = false;
+                    for (Transicao t : transicoesInteressadas) {
+                        if (!transicoes.contains(t)) {
+                            transicaoDentroDeSR = true;
+                            break;
+                        }
+                    }
+                    if (transicaoDentroDeSR) {
+                        continue;
+                    }
+                    //System.out.print("Concorrencia identificada entre as transições ");
+                    for (Transicao t : transicoesInteressadas) {
+                        //System.out.print(t.getLabel() + " ");
+                    }
+                    int escolha = -1;
+                    if (resulucaoConcorrenciaAutomatica) {
+                        Random r = new Random();
+                        escolha = r.nextInt(transicoesInteressadas.size());
+                        //System.out.println("Execução da transição " +
+                        //transicoesInteressadas.get(escolha).getLabel() + " escolhida de forma aleatória");
+                    } else {
+                        //System.out.println("Escolha uma transição para ativar:");
+                        while (escolha < 0 || escolha > transicoesInteressadas.size()) {
+                            int i = 0;
+                            for (Transicao t : transicoesInteressadas) {
+                                System.out.println(i + " - " + t.getLabel());
+                                i += 1;
+                            }
+                            escolha = t.leInt("Escolha (int): ");
+                        }
+                    }
+                    transicoesInteressadas.remove(escolha);
+                    for (Transicao t : transicoesInteressadas) {
+                        habilitadas.remove(t);
+                    }
+                }
+            }
+            for (Lugar lugar : lugares) {
+                lugar.resetTokensInteressados();
+                lugar.resetTransicoesInteressadas();
+            }
+            //dispara as transições habilitadas
+            for (Transicao t : habilitadas) {
+                if (t.ehSubRede()) {
+                    t.executarCicloSubRede();
+                } else {
+                    t.disparar();
+                }
+            }
+            //repetir enquanto possivel
+            for (Transicao t : habilitadas) {
+                if (!t.ehSubRede()) {
+                    if (t.habilitada()) {
+                        t.disparar();
+                    }
+                }
+            }
+            //prints
+            //System.out.println("Ciclo " + ciclo);
             for (Lugar lugar : lugares) {
                 lugar.resetTokensInteressados();
                 lugar.resetTransicoesInteressadas();

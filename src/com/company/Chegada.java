@@ -19,7 +19,7 @@ public class Chegada extends Evento {
     }
 
     public void execute(double time, Scheduler s) {
-        Client newClient = new Client(s.getId());
+        Client newClient = new Client(s.getId(), s);
 
         if (fila1.getSize() > fila2.getSize()){
             fila2.insert(newClient);

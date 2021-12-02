@@ -5,10 +5,10 @@ import java.util.Random;
 public class Client extends Entity {
     private int size;
 
-    public Client(int id) {
+    public Client(int id, Scheduler s) {
         super(id);
-        Random r = new Random();
-        this.size = r.nextInt(4) + 1;
+        double random = s.random();
+        this.size = (((int) (random * 100)) % 4) + 1;
     }
 
     public Client(String nome) {

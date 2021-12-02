@@ -8,11 +8,11 @@ public class LCG {
     }
 
     public double gerarProximo(){
-        int modulo = 100;
-        int a = 17;
-        int b = 43;
+        int modulo = 19993;
+        int a = 15005;
+        int b = 8371;
 
         semente = (a * semente + b) % modulo;
-        return semente / (double) 100;
+        return semente / (double) modulo;
     }
 }
