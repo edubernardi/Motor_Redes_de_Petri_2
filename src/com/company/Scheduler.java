@@ -1,16 +1,12 @@
 package com.company;
 
-import jdk.jfr.Event;
-
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Queue;
 
 public class Scheduler {
     private double tempo;
     private FEL filaEventos = new FEL();
     private LCG gerador = new LCG(17);
-    private ArrayList<grupoEntidades> grupos = new ArrayList<grupoEntidades>();
+    private ArrayList<EntitySet> grupos = new ArrayList<EntitySet>();
     private ArrayList<Entity> entidades = new ArrayList<Entity>();
     private int id = 0;
 
@@ -34,12 +30,12 @@ public class Scheduler {
     }
 
     public double exponencial(double media){
-        return - media * Math.log(1 - gerador.gerarProximo());
+        return - media * Math.log(1 - gerador.generateNext());
     }
 
     public double normal(double media, double desvio){
         //aplicando metodo de Box-Muller
-        double normalPadronizada = Math.sqrt(-2 * Math.log(gerador.gerarProximo())) * Math.cos(2 * Math.PI * gerador.gerarProximo());
+        double normalPadronizada = Math.sqrt(-2 * Math.log(gerador.generateNext())) * Math.cos(2 * Math.PI * gerador.generateNext());
         //aplicando transformacoes de media e variancia e retornando
         return media + (desvio * normalPadronizada);
     }
@@ -67,11 +63,11 @@ public class Scheduler {
         return id;
     }
 
-    public void addGroup(grupoEntidades group){
+    public void addGroup(EntitySet group){
         grupos.add(group);
     }
 
-    public grupoEntidades getEntityGroup(int i){
+    public EntitySet getEntityGroup(int i){
         return grupos.get(i);
     }
 
@@ -79,7 +75,7 @@ public class Scheduler {
         return filaEventos;
     }
 
-    public ArrayList<grupoEntidades> getGrupos() {
+    public ArrayList<EntitySet> getGrupos() {
         return grupos;
     }
 
@@ -92,7 +88,11 @@ public class Scheduler {
     }
 
     public double random(){
-        return gerador.gerarProximo();
+        return gerador.generateNext();
+    }
+
+    public int getEntityTotal(){
+        return entidades.size();
     }
 }
 

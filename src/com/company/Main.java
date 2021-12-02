@@ -47,28 +47,29 @@ public class Main {
         Garcon garcon = new Garcon(redeGarcons);
         s.addEntity(garcon);
 
-        grupoEntidades filaChegada1 = new grupoEntidades("Fila de Chegada");
-        grupoEntidades filaChegada2 = new grupoEntidades("Fila de Chegada");
+        EntitySet filaChegada1 = new EntitySet("Fila de Chegada");
+        EntitySet filaChegada2 = new EntitySet("Fila de Chegada");
         Chegada chegada = new Chegada(s.exponencial(3), 180, filaChegada1, filaChegada2);
         s.adicionarEvent(chegada);
 
-        grupoEntidades balcao = new grupoEntidades("Balcao", 6);
-        grupoEntidades mesas2Lugares = new grupoEntidades("Mesas2L", 4);
-        grupoEntidades mesas4Lugares = new grupoEntidades("Mesas4L", 6);
+        EntitySet balcao = new EntitySet("Balcao", 6);
+        EntitySet mesas2Lugares = new EntitySet("Mesas2L", 4);
+        EntitySet mesas4Lugares = new EntitySet("Mesas4L", 6);
 
         s.addGroup(balcao);
         s.addGroup(mesas2Lugares);
         s.addGroup(mesas4Lugares);
 
-        grupoEntidades filaBalcao = new grupoEntidades("Fila Balcao");
-        grupoEntidades filaMesas2Lugares = new grupoEntidades("Fila Mesas de 2 Lugares");
-        grupoEntidades filaMesas4Lugares = new grupoEntidades("Fila Mesas de 4 Lugares");
+        EntitySet filaBalcao = new EntitySet("Fila Balcao");
+        EntitySet filaMesas2Lugares = new EntitySet("Fila Mesas de 2 Lugares");
+        EntitySet filaMesas4Lugares = new EntitySet("Fila Mesas de 4 Lugares");
 
         s.addGroup(filaBalcao);
         s.addGroup(filaMesas2Lugares);
         s.addGroup(filaMesas4Lugares);
 
-        s.executar(400);
+        s.executar();
+        System.out.println(s.getEntityTotal());
     }
 }
 

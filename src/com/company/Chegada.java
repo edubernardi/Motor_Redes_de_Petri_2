@@ -2,17 +2,17 @@ package com.company;
 
 public class Chegada extends Evento {
     private double timeLimit;
-    private grupoEntidades fila1;
-    private grupoEntidades fila2;
+    private EntitySet fila1;
+    private EntitySet fila2;
 
-    public Chegada(double tec, double timeLimit, grupoEntidades fila1, grupoEntidades fila2) {
+    public Chegada(double tec, double timeLimit, EntitySet fila1, EntitySet fila2) {
         super(tec);
         this.timeLimit = timeLimit;
         this.fila1 = fila1;
         this.fila2 = fila2;
     }
 
-    public Chegada(double tec, grupoEntidades fila1, grupoEntidades fila2) {
+    public Chegada(double tec, EntitySet fila1, EntitySet fila2) {
         super(tec);
         this.fila1 = fila1;
         this.fila2 = fila2;
@@ -20,16 +20,17 @@ public class Chegada extends Evento {
 
     public void execute(double time, Scheduler s) {
         Client newClient = new Client(s.getId(), s);
+        s.addEntity(newClient);
 
         if (fila1.getSize() > fila2.getSize()){
-            fila2.insert(newClient);
+            fila2.insert(newClient, time);
             System.out.printf("%.2f", time);
             System.out.println(": Chegou novo grupo " + newClient.getId() + " de " + newClient.getSize() +
                     " clientes e foi para a Fila 2");
             IniciarPedido pedido = new IniciarPedido(tec + s.normal(8,3), fila2);
             s.adicionarEvent(pedido);
         } else {
-            fila1.insert(newClient);
+            fila1.insert(newClient, time);
             System.out.printf("%.2f", time);
             System.out.println(": Chegou novo grupo " + newClient.getId() + " de " + newClient.getSize() +
                     " clientes e foi para a Fila 1");

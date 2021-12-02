@@ -1,18 +1,18 @@
 package com.company;
 
 public class LCG {
-    private int semente;
+    private int seed;
 
-    public LCG(int semente) {
-        this.semente = semente;
+    public LCG(int seed) {
+        this.seed = seed;
     }
 
-    public double gerarProximo(){
-        int modulo = 19993;
+    public double generateNext(){
+        int module = 19993;
         int a = 15005;
         int b = 8371;
 
-        semente = (a * semente + b) % modulo;
-        return semente / (double) modulo;
+        seed = (a * seed + b) % module;
+        return seed / (double) module;
     }
 }

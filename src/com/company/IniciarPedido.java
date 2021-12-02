@@ -1,10 +1,10 @@
 package com.company;
 
 public class IniciarPedido extends Evento {
-    private grupoEntidades fila;
+    private EntitySet fila;
     private boolean caixaNoBanheiro;
 
-    public IniciarPedido(double tec, grupoEntidades fila) {
+    public IniciarPedido(double tec, EntitySet fila) {
         super(tec);
         this.fila = fila;
     }
@@ -27,7 +27,7 @@ public class IniciarPedido extends Evento {
                 Rede r = garcon.getRede();
 
                 if (r.getLugar("Atendendo caixa").getTokens() > 0){
-                    Entity client = fila.remove();
+                    Entity client = fila.remove(time);
                     System.out.printf("%.2f", time);
                     System.out.println(": Grupo " + client.getId() + " terminou de pagar");
                     int size = ((Client) client).getSize();
@@ -35,31 +35,31 @@ public class IniciarPedido extends Evento {
                         if (s.getEntityGroup(0).isFull()){
                             System.out.printf("%.2f", time);
                             System.out.println(": Grupo " + client.getId() + " foi para a fila do balcao");
-                            s.getEntityGroup(3).insert(client);
+                            s.getEntityGroup(3).insert(client, time);
                         } else {
                             System.out.printf("%.2f", time);
                             System.out.println(": Grupo " + client.getId() + " sentou-se no balcao");
-                            s.getEntityGroup(0).insert(client);
+                            s.getEntityGroup(0).insert(client, time);
                         }
                     } else if (size == 2) {
                         if (s.getEntityGroup(1).isFull()){
                             System.out.printf("%.2f", time);
                             System.out.println(": Grupo " + client.getId() + " foi para a fila das mesas de 2 lugares");
-                            s.getEntityGroup(4).insert(client);
+                            s.getEntityGroup(4).insert(client, time);
                         } else {
                             System.out.printf("%.2f", time);
                             System.out.println(": Grupo " + client.getId() + " sentou-se em uma mesa de 2 lugares");
-                            s.getEntityGroup(1).insert(client);
+                            s.getEntityGroup(1).insert(client, time);
                         }
                     } else if (size > 2) {
                         if (s.getEntityGroup(2).isFull()){
                             System.out.printf("%.2f", time);
                             System.out.println(": Grupo " + client.getId() + " foi para a fila das mesas de 4 lugares");
-                            s.getEntityGroup(5).insert(client);
+                            s.getEntityGroup(5).insert(client, time);
                         } else {
                             System.out.printf("%.2f", time);
                             System.out.println(": Grupo " + client.getId() + " sentou-se em uma mesa de 4 lugares");
-                            s.getEntityGroup(2).insert(client);
+                            s.getEntityGroup(2).insert(client, time);
                         }
                     }
                     FEL filaEventos = s.getFilaEventos();
@@ -83,7 +83,7 @@ public class IniciarPedido extends Evento {
                     System.out.println(": Garcons ocupados, nao podem ajudar no caixa");
                 }
             } else {
-                Entity client = fila.remove();
+                Entity client = fila.remove(time);
                 System.out.printf("%.2f", time);
                 System.out.println(": Grupo " + client.getId() + " terminou de pagar");
                 int size = ((Client) client).getSize();
@@ -91,31 +91,31 @@ public class IniciarPedido extends Evento {
                     if (s.getEntityGroup(0).isFull()){
                         System.out.printf("%.2f", time);
                         System.out.println(": Grupo " + client.getId() + " foi para a fila do balcao");
-                        s.getEntityGroup(3).insert(client);
+                        s.getEntityGroup(3).insert(client, time);
                     } else {
                         System.out.printf("%.2f", time);
                         System.out.println(": Grupo " + client.getId() + " sentou-se no balcao");
-                        s.getEntityGroup(0).insert(client);
+                        s.getEntityGroup(0).insert(client, time);
                     }
                 } else if (size == 2) {
                     if (s.getEntityGroup(1).isFull()){
                         System.out.printf("%.2f", time);
                         System.out.println(": Grupo " + client.getId() + " foi para a fila das mesas de 2 lugares");
-                        s.getEntityGroup(4).insert(client);
+                        s.getEntityGroup(4).insert(client, time);
                     } else {
                         System.out.printf("%.2f", time);
                         System.out.println(": Grupo " + client.getId() + " sentou-se em uma mesa de 2 lugares");
-                        s.getEntityGroup(1).insert(client);
+                        s.getEntityGroup(1).insert(client, time);
                     }
                 } else if (size > 2) {
                     if (s.getEntityGroup(2).isFull()){
                         System.out.printf("%.2f", time);
                         System.out.println(": Grupo " + client.getId() + " foi para a fila das mesas de 4 lugares");
-                        s.getEntityGroup(5).insert(client);
+                        s.getEntityGroup(5).insert(client, time);
                     } else {
                         System.out.printf("%.2f", time);
                         System.out.println(": Grupo " + client.getId() + " sentou-se em uma mesa de 4 lugares");
-                        s.getEntityGroup(2).insert(client);
+                        s.getEntityGroup(2).insert(client, time);
                     }
                 }
                 FEL filaEventos = s.getFilaEventos();
